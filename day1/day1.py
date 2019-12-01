@@ -1,4 +1,5 @@
 import math
+
 def main():
     fp = open('day1.txt', 'r')
     sum = 0
@@ -12,9 +13,9 @@ def main():
 
 
     fp.close()
-    #Day1 - 1 Start result
+    #Day1 - 1 star result
     print(f"Day1 - 1 star solution: {sum!s}")
-    #Day1 - 2 Start result
+    #Day1 - 2 star result
     print(f"Day1 - 2 star solution: {sum_all_modules!s}")
     
 
@@ -28,7 +29,6 @@ def calc_fuel_fuel(mass, module_sum):
 
     else:
         return calc_fuel_fuel(calc_fuel(mass), module_sum + calc_fuel(mass))
-
 
 if __name__ == "__main__":
     main()
