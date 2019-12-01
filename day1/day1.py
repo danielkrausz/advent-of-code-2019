@@ -1,7 +1,9 @@
 import math
+import os
+import sys
 
 def main():
-    fp = open('day1.txt', 'r')
+    fp = open(os.path.join(sys.path[0], 'day1.txt'), 'r')
     sum = 0
     sum_all_modules = 0
     line = fp.readline()
@@ -14,9 +16,9 @@ def main():
 
     fp.close()
     #Day1 - 1 star result
-    print(f"Day1 - 1 star solution: {sum!s}")
+    print(f"Day 1 - 1 star solution: {sum!s}")
     #Day1 - 2 star result
-    print(f"Day1 - 2 star solution: {sum_all_modules!s}")
+    print(f"Day 1 - 2 star solution: {sum_all_modules!s}")
     
 
 def calc_fuel(mass):
