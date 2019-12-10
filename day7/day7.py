@@ -8,19 +8,33 @@ def main():
 
     intcode = [int(num) for num in line]
 
-    phase_setting = range(0,5)
-    all_outs = []
-    for subset in itertools.permutations(phase_setting, len(phase_setting)):
-        amp_inputs = []
-        amp_out = 0
-        for i in range(0, len(subset)):
-            amp_inputs.append(subset[i])
-            amp_inputs.append(amp_out)
-            processed_intcode = intcode.copy()
-            amp_out = run_intcode(processed_intcode, amp_inputs)
-        all_outs.append(amp_out)
+    # phase_setting = range(0,5)
+    # all_outs = []
+    # for subset in itertools.permutations(phase_setting, len(phase_setting)):
+    #     amp_inputs = []
+    #     amp_out = 0
+    #     for phase in subset:
+    #         amp_inputs.append(phase)
+    #         amp_inputs.append(amp_out)
+    #         processed_intcode = intcode.copy()
+    #         amp_out = run_intcode(processed_intcode, amp_inputs)
+    #     all_outs.append(amp_out)
 
-    print(max(all_outs))
+    # print(max(all_outs))
+
+    phase_setting = [9,8,7,6,5]
+    all_outs = []
+    # for subset in itertools.permutations(phase_setting, len(phase_setting)):
+    amp_inputs = []
+    amp_out = 0
+    for phase in phase_setting:
+        amp_inputs.append(phase)
+        amp_inputs.append(amp_out)
+        print(amp_inputs)
+        processed_intcode = intcode.copy()
+        amp_out = run_intcode(processed_intcode, amp_inputs)
+    all_outs.append(amp_out)
+
 
 def run_intcode(intcode, amp_inputs):
     i = 0
@@ -56,6 +70,7 @@ def run_intcode(intcode, amp_inputs):
             intcode[param_3] = param_1 * param_2
             i += 4
         elif opcode == '03':
+            print(amp_inputs)
             intcode[intcode[i+1]] = amp_inputs.pop(0)
             i += 2
         elif opcode == '04':
