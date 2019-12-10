@@ -1,17 +1,30 @@
 import os
 import sys
+import itertools
 
 def main():
     fp = open(os.path.join(sys.path[0], 'day7.txt'), 'r')
     line = fp.readline().split(",")
 
-    
     intcode = [int(num) for num in line]
-    
-    run_intcode(intcode, 0)
 
-def run_intcode(intcode, input_id):
+    phase_setting = range(0,5)
+    all_outs = []
+    for subset in itertools.permutations(phase_setting, len(phase_setting)):
+        amp_inputs = []
+        amp_out = 0
+        for i in range(0, len(subset)):
+            amp_inputs.append(subset[i])
+            amp_inputs.append(amp_out)
+            processed_intcode = intcode.copy()
+            amp_out = run_intcode(processed_intcode, amp_inputs)
+        all_outs.append(amp_out)
+
+    print(max(all_outs))
+
+def run_intcode(intcode, amp_inputs):
     i = 0
+    output = 0
     while str(intcode[i])[-2:] != '99':
         param = str(intcode[i]).rjust(5, '0')
         opcode = param[-2:]
@@ -43,13 +56,14 @@ def run_intcode(intcode, input_id):
             intcode[param_3] = param_1 * param_2
             i += 4
         elif opcode == '03':
-            intcode[intcode[i+1]] = int(input())
+            intcode[intcode[i+1]] = amp_inputs.pop(0)
             i += 2
         elif opcode == '04':
             if param[2] == '0':
-                print(intcode[intcode[i+1]])
+                output = intcode[intcode[i+1]]
             else:
-                print(intcode[i+1])
+                output = intcode[i+1]
+            # print(output)
             i += 2
         elif opcode == '05':
             if param_1 != 0:
@@ -73,6 +87,9 @@ def run_intcode(intcode, input_id):
             else:
                 intcode[param_3] = 0
             i += 4
+
+    return output
+    
 
 if __name__ == "__main__":
     main()
